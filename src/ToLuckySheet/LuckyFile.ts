@@ -27,7 +27,7 @@ export class LuckyFile extends LuckyFileBase {
         this.readXml = new ReadXml(files);
         this.getSheetNameList();
 
-        this.sharedStrings = this.readXml.getElementsByTagName("sst/si", sharedStringsFile);
+        this.sharedStrings = this.readXml.getElementsByTagName("sst/si", sharedStringsFile, true, (s) => s.replace(/<rPh.*?<\/rPh>/g, ""));
         this.calcChain = this.readXml.getElementsByTagName("calcChain/c", calcChainFile);
         this.styles = {};
         this.styles["cellXfs"] =  this.readXml.getElementsByTagName("cellXfs/xf", stylesFile);

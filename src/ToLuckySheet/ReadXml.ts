@@ -68,7 +68,7 @@ export class ReadXml extends xmloperation{
     * @param fileName One of uploadfileList, uploadfileList is file group, {key:value}
     * @return Xml element calss
     */
-    getElementsByTagName(path:string, fileName:string, isFile: boolean = true): Element[]{
+    getElementsByTagName(path:string, fileName:string, isFile: boolean = true, filter: (s: string) => string = (s) => s): Element[]{
         
         let file = this.getFileByName(fileName);
         if (!isFile) file = fileName;
@@ -96,7 +96,7 @@ export class ReadXml extends xmloperation{
         let elements:Element[] = [];
 
         for(let i=0;i<ret.length;i++){
-            let ele = new Element(ret[i]);
+            let ele = new Element(filter(ret[i]));
             elements.push(ele);
         }
 
