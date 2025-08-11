@@ -392,7 +392,8 @@ export class LuckySheetCelldata extends LuckySheetCelldataBase {
             const generateInlineString = (sharedSI: Element) =>{
                 let rFlag = sharedSI.getInnerElements("r");
                 if (rFlag == null) {
-                    let tFlag = sharedSI.getInnerElements("t");
+                    const tempSI = new Element(sharedSI.elementString.replace(/<rPh.*?<\/rPh>/g, ""));
+                    let tFlag = tempSI.getInnerElements("t");
                     if (tFlag != null) {
                         let text = "";
                         tFlag.forEach((t) => {
