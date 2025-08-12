@@ -70,6 +70,32 @@ export class LuckyExcel {
             });
     }
 
+    static transformExcelToUniverByUrl(
+        url: string,
+        name: string,
+        callBack?: (files: IWorkbookData, fs?: string) => void,
+        errorHandler?: (err: Error) => void) {
+        let handleZip: HandleZip = new HandleZip();
+        handleZip.unzipFileByUrl(url, function (files: IuploadfileList) {
+            console.log('input------>', files);
+            let luckyFile = new LuckyFile(files, name);
+            let luckysheetfile = luckyFile.Parse();
+            let exportJson = JSON.parse(luckysheetfile);
+            console.log('output---->', exportJson, files)
+            if (callBack != undefined) {
+                const univerData = new UniverWorkBook(exportJson)
+                callBack(univerData.mode, luckysheetfile);
+            }
+        },
+            function (err: Error) {
+                if (errorHandler) {
+                    errorHandler(err);
+                } else {
+                    console.error(err);
+                }
+            });
+    }
+
 
     static transformExcelToUniver(
         excelFile: File,
